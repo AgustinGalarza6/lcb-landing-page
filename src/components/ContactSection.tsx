@@ -35,28 +35,45 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(""); // Limpiar error al escribir
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError("");
 
-    // Simular envío (puedes conectar con tu backend)
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitted(true);
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 3000);
-    
-    setIsSubmitting(false);
+      if (!response.ok) {
+        throw new Error('Error al enviar el mensaje');
+      }
+
+      setIsSubmitted(true);
+      setFormData({ name: "", email: "", phone: "", message: "" });
+
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 5000);
+    } catch (err) {
+      setError('Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.');
+      console.error('Error:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactDetails = [
@@ -276,6 +293,18 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
                   placeholder="Contanos cómo podemos ayudarte..."
                 />
               </div>
+
+              {error && (
+                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                  {error}
+                </div>
+              )}
+
+              {isSubmitted && (
+                <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
+                  ¡Mensaje enviado exitosamente! Te contactaremos pronto.
+                </div>
+              )}
 
               <button
                 type="submit"
