@@ -78,13 +78,13 @@ export default function PredicasList({ predicas }: PredicasListProps) {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full mb-4">
             <Book className="w-5 h-5 text-gray-900" />
-            <span className="text-sm font-semibold text-gray-900">Palabra de Dios</span>
+            <span className="text-sm font-semibold text-gray-900">Contenido Espiritual</span>
           </div>
           <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Últimas Prédicas
+            Prédicas
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Alimenta tu espíritu con mensajes que transforman vidas
+            Enseñanzas bíblicas para tu crecimiento espiritual y vida diaria.
           </p>
         </motion.div>
 

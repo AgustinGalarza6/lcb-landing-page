@@ -74,14 +74,13 @@ export default function Hero({
               className="group px-8 py-4 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-all hover:scale-105 flex items-center gap-2 shadow-lg"
             >
               Ver Prédicas
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
             </Link>
             <Link
               href="#eventos"
-              className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all border border-white/30 flex items-center gap-2"
+              className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all border border-white/30"
             >
               Próximos Eventos
-              <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
             </Link>
           </motion.div>
 
