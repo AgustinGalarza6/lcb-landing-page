@@ -26,6 +26,24 @@ interface SedesCarouselProps {
 export default function SedesCarousel({ sedes }: SedesCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Si no hay sedes, mostrar mensaje
+  if (!sedes || sedes.length === 0) {
+    return (
+      <section id="sedes" className="py-24 bg-white">
+        <div className="container">
+          <div className="text-center">
+            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Nuestras Sedes
+            </h2>
+            <p className="text-lg text-gray-600">
+              Próximamente agregaremos información sobre nuestras sedes.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % sedes.length);
   };
@@ -35,6 +53,11 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
   };
 
   const currentSede = sedes[currentIndex];
+
+  // Validación adicional por si currentSede no existe
+  if (!currentSede) {
+    return null;
+  }
 
   return (
     <section id="sedes" className="py-24 bg-white">
@@ -72,7 +95,7 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
               <div className="grid grid-cols-1 lg:grid-cols-2">
                 {/* Imagen/Mapa */}
                 <div className="relative h-96 lg:h-auto bg-gray-200">
-                  {currentSede.imagen ? (
+                  {currentSede?.imagen ? (
                     <img
                       src={currentSede.imagen}
                       alt={currentSede.nombre}

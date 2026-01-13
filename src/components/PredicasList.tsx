@@ -23,6 +23,24 @@ interface PredicasListProps {
 }
 
 export default function PredicasList({ predicas }: PredicasListProps) {
+  // Si no hay predicas, mostrar mensaje
+  if (!predicas || predicas.length === 0) {
+    return (
+      <section id="predicas" className="py-20 bg-gray-50">
+        <div className="container">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+              Últimas Prédicas
+            </h2>
+            <p className="text-lg text-gray-600">
+              Próximamente agregaremos prédicas.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   const extractVideoId = (videoIdOrUrl: string): string => {
     // Si es una URL completa de YouTube, extraer el ID
     if (videoIdOrUrl.includes('youtube.com') || videoIdOrUrl.includes('youtu.be')) {

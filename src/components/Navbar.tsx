@@ -22,7 +22,6 @@ export default function Navbar() {
     { href: "#inicio", label: "Inicio" },
     { href: "#predicas", label: "Prédicas" },
     { href: "#eventos", label: "Eventos" },
-    { href: "#devocionales", label: "Devocionales" },
     { href: "#sedes", label: "Sedes" },
     { href: "#contacto", label: "Contacto" },
   ];
@@ -44,9 +43,9 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-3">
             <div className="w-12 h-12 rounded-lg overflow-hidden">
               <img 
-                src="/media/LaCasaDeLaBendiciónLogo.png" 
+                src={isScrolled ? "/media/LaCasaDeLaBendiciónLogo-Negro.png" : "/media/LaCasaDeLaBendiciónLogo.png"}
                 alt="La Casa de la Bendición Logo" 
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain transition-opacity duration-300"
               />
             </div>
             <div className="hidden md:block">

@@ -23,6 +23,24 @@ interface DevocionalListProps {
 }
 
 export default function DevocionalList({ devocionales }: DevocionalListProps) {
+  // Si no hay devocionales, mostrar mensaje
+  if (!devocionales || devocionales.length === 0) {
+    return (
+      <section id="devocionales" className="py-24 bg-white">
+        <div className="container">
+          <div className="text-center">
+            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Blog & Devocionales
+            </h2>
+            <p className="text-lg text-gray-600">
+              Próximamente publicaremos contenido devocional.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   const getCategoriaIcon = (categoria: string) => {
     return "📖"; // Puedes personalizar por categoría
   };

@@ -24,6 +24,24 @@ interface EventosListProps {
 }
 
 export default function EventosList({ eventos }: EventosListProps) {
+  // Si no hay eventos, mostrar mensaje
+  if (!eventos || eventos.length === 0) {
+    return (
+      <section id="eventos" className="py-20 bg-gray-50">
+        <div className="container">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+              Próximos Eventos
+            </h2>
+            <p className="text-lg text-gray-600">
+              Próximamente publicaremos nuevos eventos.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   const getTipoColor = (tipo: string) => {
     const colors: Record<string, string> = {
       convencion: "from-gray-700 to-gray-500",
