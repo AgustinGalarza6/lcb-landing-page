@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,7 +11,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -22,35 +22,40 @@ export default function Navbar() {
     { href: "#inicio", label: "Inicio" },
     { href: "#predicas", label: "Prédicas" },
     { href: "#eventos", label: "Eventos" },
+    { href: "#convenciones", label: "Convenciones" },
+    { href: "#devocionales", label: "Devocionales" },
     { href: "#sedes", label: "Sedes" },
-    { href: "#contacto", label: "Contacto" },
   ];
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out ${
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg"
+          ? "bg-white/95 backdrop-blur-xl shadow-sm border-b border-gray-100/50"
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-lg overflow-hidden">
+          <Link href="/" className="flex items-center space-x-3 group">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+              className="w-11 h-11 rounded-lg overflow-hidden"
+            >
               <img 
                 src={isScrolled ? "/media/LaCasaDeLaBendiciónLogo-Negro.png" : "/media/LaCasaDeLaBendiciónLogo.png"}
                 alt="La Casa de la Bendición Logo" 
                 className="w-full h-full object-contain transition-opacity duration-300"
               />
-            </div>
+            </motion.div>
             <div className="hidden md:block">
               <div
-                className={`font-serif font-bold text-xl transition-colors ${
+                className={`font-serif font-bold text-lg tracking-tight transition-colors duration-300 ${
                   isScrolled ? "text-gray-900" : "text-white"
                 }`}
               >
@@ -60,32 +65,48 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`font-medium transition-colors hover:text-gray-600 ${
-                  isScrolled ? "text-gray-900" : "text-white"
+                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 group ${
+                  isScrolled 
+                    ? "text-gray-700 hover:text-lcb-primary" 
+                    : "text-white/90 hover:text-white"
                 }`}
               >
                 {link.label}
+                <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
+                  isScrolled ? "bg-lcb-primary" : "bg-white"
+                }`} />
               </Link>
             ))}
+          </div>
+
+          {/* CTA Button (Desktop) */}
+          <div className="hidden lg:flex items-center">
+            <Link
+              href="#contacto"
+              className={`px-8 py-3 text-sm font-semibold rounded-full transition-all duration-300 hover:shadow-xl hover:scale-105 ${
+                isScrolled
+                  ? "text-white bg-lcb-primary shadow-md hover:bg-lcb-primary/90"
+                  : "text-lcb-primary bg-white shadow-lg hover:bg-white/95 ring-1 ring-black/5"
+              }`}
+            >
+              Visítanos
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`lg:hidden p-2 rounded-lg ${
-              isScrolled ? "text-gray-900" : "text-white"
+            className={`lg:hidden p-2 transition-colors duration-300 ${
+              isScrolled ? "text-gray-700 hover:text-lcb-primary" : "text-white hover:text-white/80"
             }`}
+            aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
@@ -97,19 +118,42 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-t border-gray-200"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden bg-white/95 backdrop-blur-lg border-t border-gray-100"
           >
-            <div className="container mx-auto px-4 py-4 space-y-4">
-              {navLinks.map((link) => (
-                <Link
+            <div className="px-4 py-6 space-y-1">
+              {navLinks.map((link, index) => (
+                <motion.div
                   key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block py-2 text-lcb-dark hover:text-lcb-secondary transition-colors font-medium"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.3 }}
                 >
-                  {link.label}
-                </Link>
+                  <Link
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-3 text-base font-medium text-gray-700 hover:text-lcb-primary hover:bg-gray-50 rounded-lg transition-all duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
+
+              {/* Mobile CTA */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.3 }}
+                className="pt-4"
+              >
+                <Link
+                  href="#contacto"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full px-8 py-3.5 text-center text-sm font-semibold text-white bg-lcb-primary rounded-full shadow-md hover:shadow-xl hover:bg-lcb-primary/90 transition-all duration-300"
+                >
+                  Visítanos
+                </Link>
+              </motion.div>
             </div>
           </motion.div>
         )}

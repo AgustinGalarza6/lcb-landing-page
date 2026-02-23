@@ -2,8 +2,12 @@ import { getPayload } from "payload";
 import config from "@/payload.config";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import VerseSection from "@/components/VerseSection";
 import PredicasList from "@/components/PredicasList";
 import EventosList from "@/components/EventosList";
+import ConvencionesSection from "@/components/ConvencionesSection";
+import ChurchActivitiesSection from "@/components/ChurchActivitiesSection";
+import DevocionalList from "@/components/DevocionalList";
 import SedesCarousel from "@/components/SedesCarousel";
 import ContactSection from "@/components/ContactSection";
 
@@ -16,11 +20,17 @@ export default async function HomePage() {
   let heroData: any = { titulo: "Bienvenidos a La Casa de la Bendición" };
   let contactData: any = { 
     nombreIglesia: "La Casa de la Bendición",
-    direccion: "Dirección no configurada",
+    direccion: "Av. San Martín 3555, B1847EZT Rafael Calzada, Provincia de Buenos Aires",
+    ciudad: "Rafael Calzada",
+    redesSociales: {
+      facebook: "https://www.facebook.com/lcbcentral?locale=es_LA",
+      instagram: "https://www.instagram.com/lcbcentral/",
+      youtube: "https://www.youtube.com/@LCBCENTRAL",
+    },
   };
 
   try {
-    const [hero, predicas, eventos, sedes, contact] = await Promise.all([
+    const [hero, predicas, eventos, convenciones, devocionales, sedes, contact] = await Promise.all([
       payload.findGlobal({ slug: "hero-section" }).catch(() => null),
       payload.find({
         collection: "predicas",
@@ -29,6 +39,20 @@ export default async function HomePage() {
       }),
       payload.find({
         collection: "eventos",
+        limit: 6,
+        sort: "-fecha",
+      }),
+      payload.find({
+        collection: "convenciones",
+        where: {
+          activa: {
+            equals: true,
+          },
+        },
+        sort: "-fechaInicio",
+      }),
+      payload.find({
+        collection: "devocionales",
         limit: 6,
         sort: "-fecha",
       }),
@@ -47,6 +71,8 @@ export default async function HomePage() {
     if (contact) contactData = contact;
     const predicasData = predicas;
     const eventosData = eventos;
+    const convencionesData = convenciones;
+    const devocionalesData = devocionales;
     const sedesData = sedes;
 
     // Preparar datos de sedes desde la colección
@@ -82,9 +108,14 @@ export default async function HomePage() {
               ? heroData.imagenFondo.url
               : undefined
           }
-          versiculo={heroData.versiculo || undefined}
-          textoVersiculo={heroData.textoVersiculo || undefined}
         />
+
+        {heroData.textoVersiculo && heroData.versiculo && (
+          <VerseSection
+            texto={heroData.textoVersiculo}
+            referencia={heroData.versiculo}
+          />
+        )}
 
         {predicasData.docs.length > 0 && (
           <PredicasList
@@ -117,6 +148,53 @@ export default async function HomePage() {
               imagen:
                 evento.imagen && typeof evento.imagen === "object" && evento.imagen.url
                   ? { url: evento.imagen.url, alt: evento.imagen.alt || undefined }
+                  : undefined,
+            }))}
+          />
+        )}
+
+        {convencionesData.docs.length > 0 && (
+          <ConvencionesSection
+            convenciones={convencionesData.docs.map((convencion) => ({
+              id: convencion.id,
+              titulo: convencion.titulo,
+              subtitulo: convencion.subtitulo || undefined,
+              descripcion: convencion.descripcion,
+              fechaInicio: convencion.fechaInicio,
+              fechaFin: convencion.fechaFin,
+              lugar: convencion.lugar,
+              ciudad: convencion.ciudad,
+              capacidad: convencion.capacidad || undefined,
+              costoGeneral: convencion.costoGeneral || undefined,
+              costoEstudiantes: convencion.costoEstudiantes || undefined,
+              moneda: convencion.moneda,
+              destacada: convencion.destacada,
+              activa: convencion.activa,
+              hashtag: convencion.hashtag || undefined,
+              imagenPrincipal:
+                convencion.imagenPrincipal && typeof convencion.imagenPrincipal === "object" && convencion.imagenPrincipal.url
+                  ? { url: convencion.imagenPrincipal.url, alt: convencion.imagenPrincipal.alt || undefined }
+                  : undefined,
+              conferencistas: convencion.conferencistas?.map((conf) => ({
+                nombre: conf.nombre,
+                ministerio: conf.ministerio || undefined,
+              })),
+            }))}
+          />
+        )}
+        <ChurchActivitiesSection />
+        {devocionalesData.docs.length > 0 && (
+          <DevocionalList
+            devocionales={devocionalesData.docs.map((devocional) => ({
+              id: String(devocional.id),
+              titulo: devocional.titulo,
+              extracto: devocional.extracto || undefined,
+              autor: devocional.autor,
+              fecha: devocional.fecha,
+              categoria: devocional.categoria,
+              imagenPortada:
+                devocional.imagenPortada && typeof devocional.imagenPortada === "object" && devocional.imagenPortada.url
+                  ? { url: devocional.imagenPortada.url, alt: devocional.imagenPortada.alt || undefined }
                   : undefined,
             }))}
           />

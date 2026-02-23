@@ -8,16 +8,12 @@ interface HeroProps {
   titulo: string;
   subtitulo?: string;
   imagenFondo?: string;
-  versiculo?: string;
-  textoVersiculo?: string;
 }
 
 export default function Hero({
   titulo,
   subtitulo,
   imagenFondo,
-  versiculo,
-  textoVersiculo,
 }: HeroProps) {
   return (
     <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -52,12 +48,12 @@ export default function Hero({
           transition={{ duration: 0.8 }}
           className="max-w-5xl mx-auto"
         >
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1]">
             {titulo}
           </h1>
           
           {subtitulo && (
-            <p className="text-xl md:text-2xl lg:text-3xl mb-12 whitespace-nowrap mx-auto text-gray-200 font-light">
+            <p className="text-xl md:text-2xl lg:text-3xl mb-16 mx-auto text-gray-200 font-light max-w-4xl leading-relaxed">
               {subtitulo}
             </p>
           )}
@@ -67,58 +63,62 @@ export default function Hero({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20"
           >
             <Link
-              href="#predicas"
+              href="#sedes"
               className="group px-8 py-4 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-all hover:scale-105 flex items-center gap-2 shadow-lg"
             >
-              Ver Prédicas
-              <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              Cómo llegar
             </Link>
             <Link
-              href="#eventos"
-              className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all border border-white/30"
+              href="#predicas"
+              className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all border border-white/30 flex items-center gap-2"
             >
-              Próximos Eventos
+              Explorar Mensajes
+              <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
             </Link>
           </motion.div>
-
-          {/* Versículo */}
-          {versiculo && textoVersiculo && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="max-w-3xl mx-auto"
-            >
-              <div className="relative">
-                <div className="absolute -left-4 top-0 text-6xl text-lcb-accent/30 font-serif">"</div>
-                <blockquote className="text-lg md:text-xl italic bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                  <p className="mb-4 leading-relaxed">{textoVersiculo}</p>
-                  <footer className="text-base font-semibold text-lcb-accent">
-                    — {versiculo}
-                  </footer>
-                </blockquote>
-              </div>
-            </motion.div>
-          )}
         </motion.div>
       </div>
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
+        className="absolute bottom-8 inset-x-0 z-20 flex justify-center"
       >
-        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+        <Link
+          href="#predicas"
+          className="flex flex-col items-center text-white/60 hover:text-white transition-colors group"
+        >
+          <span className="text-sm font-medium pb-2 block text-center">Explorar</span>
           <motion.div
-            className="w-1 h-3 bg-white rounded-full"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-          />
-        </div>
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="flex justify-center"
+          >
+            <svg
+              className="w-7 h-12"
+              viewBox="0 0 24 40"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <rect x="4" y="1" width="16" height="26" rx="8" />
+              <motion.line
+                x1="12"
+                y1="8"
+                x2="12"
+                y2="14"
+                strokeLinecap="round"
+                animate={{ y1: [8, 12, 8], y2: [14, 18, 14] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              />
+            </svg>
+          </motion.div>
+        </Link>
       </motion.div>
     </section>
   );

@@ -9,6 +9,7 @@ import sharp from "sharp";
 import { Users } from "./collections/Users";
 import { Predicas } from "./collections/Predicas";
 import { Eventos } from "./collections/Eventos";
+import { Convenciones } from "./collections/Convenciones";
 import { Devocionales } from "./collections/Devocionales";
 import { Sedes } from "./collections/Sedes";
 import { Media } from "./collections/Media";
@@ -30,7 +31,7 @@ export default buildConfig({
       titleSuffix: " - La Casa de la Bendición",
     },
   },
-  collections: [Users, Predicas, Eventos, Devocionales, Sedes, Media],
+  collections: [Users, Predicas, Eventos, Convenciones, Devocionales, Sedes, Media],
   globals: [ContactInfo, HeroSection],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "tu-clave-super-secreta-cambiala-por-algo-aleatorio-y-seguro-2026",

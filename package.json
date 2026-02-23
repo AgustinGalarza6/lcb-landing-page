@@ -12,7 +12,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate:types": "payload generate:types",
-    "create-admin": "tsx scripts/create-admin.ts"
+    "create-admin": "tsx scripts/create-admin.ts",
+    "seed": "tsx scripts/seed-complete.ts"
   },
   "dependencies": {
     "@payloadcms/db-sqlite": "^3.0.0",

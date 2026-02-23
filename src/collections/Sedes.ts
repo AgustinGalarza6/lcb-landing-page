@@ -53,7 +53,6 @@ export const Sedes: CollectionConfig = {
       name: "imagen",
       type: "upload",
       relationTo: "media",
-      required: true,
       label: "Foto de la Sede",
     },
     {

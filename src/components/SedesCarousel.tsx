@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Phone, Clock, ChevronLeft, ChevronRight, Navigation } from "lucide-react";
+import { useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { MapPin, Phone, Clock, ChevronRight, Navigation, Search } from "lucide-react";
 
 interface Sede {
   id: string;
@@ -24,13 +24,14 @@ interface SedesCarouselProps {
 }
 
 export default function SedesCarousel({ sedes }: SedesCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   // Si no hay sedes, mostrar mensaje
   if (!sedes || sedes.length === 0) {
     return (
-      <section id="sedes" className="py-24 bg-white">
-        <div className="container">
+      <section id="sedes" className="py-20 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Nuestras Sedes
@@ -44,190 +45,257 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
     );
   }
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % sedes.length);
+  // Filtrar sedes basado en búsqueda
+  const filteredSedes = sedes.filter((sede) => {
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return true;
+    
+    return (
+      sede.nombre.toLowerCase().includes(query) ||
+      sede.ciudad?.toLowerCase().includes(query) ||
+      sede.direccion.toLowerCase().includes(query)
+    );
+  });
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      const scrollAmount = 400;
+      const newScrollLeft =
+        direction === "left"
+          ? scrollRef.current.scrollLeft - scrollAmount
+          : scrollRef.current.scrollLeft + scrollAmount;
+
+      scrollRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: "smooth",
+      });
+    }
   };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + sedes.length) % sedes.length);
-  };
-
-  const currentSede = sedes[currentIndex];
-
-  // Validación adicional por si currentSede no existe
-  if (!currentSede) {
-    return null;
-  }
 
   return (
-    <section id="sedes" className="py-24 bg-white">
-      <div className="container">
+    <section id="sedes" className="py-20 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          transition={{ duration: 0.6 }}
+          className="mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full mb-4">
-            <MapPin className="w-5 h-5 text-gray-900" />
-            <span className="text-sm font-semibold text-gray-900">Encuéntranos</span>
+          {/* Eyebrow */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-1 h-6 bg-lcb-accent rounded-full" />
+            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gray-500">
+              Encuéntranos
+            </span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+          
+          {/* Title */}
+          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-3 tracking-tight leading-tight">
             Nuestras Sedes
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Visítanos en cualquiera de nuestras ubicaciones
+          
+          {/* Subtitle */}
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl font-light leading-relaxed mb-8">
+            Un espacio cerca de ti donde siempre serás bienvenido.
           </p>
+
+          {/* Search Input - Premium & Minimal */}
+          <div className="relative max-w-2xl">
+            <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
+              <Search className="w-5 h-5 text-gray-400" />
+            </div>
+            <input
+              type="text"
+              placeholder="Buscar por localidad (ej: Rafael Calzada)"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-14 pr-6 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all text-lg font-light"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute inset-y-0 right-0 pr-6 flex items-center text-gray-400 hover:text-gray-900 transition-colors"
+              >
+                <span className="text-sm font-medium">Limpiar</span>
+              </button>
+            )}
+          </div>
         </motion.div>
 
-        {/* Carousel */}
-        <div className="relative max-w-6xl mx-auto">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.5 }}
-              className="bg-white rounded-3xl shadow-2xl overflow-hidden"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2">
-                {/* Imagen/Mapa */}
-                <div className="relative h-96 lg:h-auto bg-gray-200">
-                  {currentSede?.imagen ? (
-                    <img
-                      src={currentSede.imagen}
-                      alt={currentSede.nombre}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
-                      <MapPin className="w-24 h-24 text-white/30" />
-                    </div>
-                  )}
-                  
-                  {/* Overlay con nombre */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8">
-                    <h3 className="text-3xl font-bold text-white mb-2">
-                      {currentSede.nombre}
-                    </h3>
-                    {currentSede.ciudad && (
-                      <p className="text-white/90 text-lg">{currentSede.ciudad}</p>
-                    )}
-                  </div>
-                </div>
+        {/* Results count */}
+        {searchQuery && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-sm text-gray-500 mb-6"
+          >
+            {filteredSedes.length === 0
+              ? "No encontramos sedes en esa localidad"
+              : `${filteredSedes.length} ${filteredSedes.length === 1 ? "sede encontrada" : "sedes encontradas"}`}
+          </motion.p>
+        )}
 
-                {/* Información */}
-                <div className="p-8 lg:p-12 flex flex-col justify-between">
-                  <div className="space-y-6">
-                    {/* Dirección */}
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-6 h-6 text-gray-900" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900 mb-1">Dirección</h4>
-                        <p className="text-gray-600">{currentSede.direccion}</p>
-                        {currentSede.googleMapsUrl && (
-                          <a
-                            href={currentSede.googleMapsUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-gray-900 hover:text-gray-600 transition-colors text-sm mt-2 font-medium"
-                          >
-                            <Navigation className="w-4 h-4" />
-                            Cómo llegar
-                          </a>
+        {/* Cards Slider */}
+        {filteredSedes.length > 0 && (
+          <div className="relative">
+            {/* Navigation Buttons - Desktop Only */}
+            {filteredSedes.length > 2 && (
+              <>
+                <button
+                  onClick={() => scroll("left")}
+                  className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10 w-12 h-12 items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all duration-300 hover:scale-110"
+                  aria-label="Anterior"
+                >
+                  <ChevronRight className="w-6 h-6 text-gray-900 rotate-180" />
+                </button>
+
+                <button
+                  onClick={() => scroll("right")}
+                  className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10 w-12 h-12 items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all duration-300 hover:scale-110"
+                  aria-label="Siguiente"
+                >
+                  <ChevronRight className="w-6 h-6 text-gray-900" />
+                </button>
+              </>
+            )}
+
+            {/* Cards Container */}
+            <div
+              ref={scrollRef}
+              className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4"
+            >
+              {filteredSedes.map((sede, index) => (
+                <motion.article
+                  key={sede.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="group flex-shrink-0 snap-start w-[85vw] sm:w-[450px] lg:w-[500px]"
+                >
+                  {/* Card */}
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+                    {/* Image */}
+                    <div className="relative h-64 bg-gray-900">
+                      {sede.imagen ? (
+                        <img
+                          src={sede.imagen}
+                          alt={sede.nombre}
+                          className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                          <MapPin className="w-16 h-16 text-white/20" />
+                        </div>
+                      )}
+                      
+                      {/* Gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      
+                      {/* Title on image */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 className="text-2xl font-bold text-white mb-1">
+                          {sede.nombre}
+                        </h3>
+                        {sede.ciudad && (
+                          <p className="text-white/90 text-sm font-light">{sede.ciudad}</p>
                         )}
                       </div>
                     </div>
 
-                    {/* Teléfono */}
-                    {currentSede.telefono && (
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Phone className="w-6 h-6 text-gray-900" />
+                    {/* Information */}
+                    <div className="p-6 space-y-4">
+                      {/* Address */}
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <MapPin className="w-5 h-5 text-gray-600" />
                         </div>
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900 mb-1">Teléfono</h4>
-                          <a
-                            href={`tel:${currentSede.telefono}`}
-                            className="text-gray-600 hover:text-gray-900 transition-colors"
-                          >
-                            {currentSede.telefono}
-                          </a>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-gray-900 mb-1">Dirección</p>
+                          <p className="text-sm text-gray-600 leading-relaxed">{sede.direccion}</p>
+                          {sede.googleMapsUrl && (
+                            <a
+                              href={sede.googleMapsUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-gray-900 hover:text-gray-600 transition-colors text-xs mt-2 font-medium"
+                            >
+                              <Navigation className="w-3 h-3" />
+                              Cómo llegar
+                            </a>
+                          )}
                         </div>
                       </div>
-                    )}
 
-                    {/* Horarios */}
-                    {currentSede.horarios && currentSede.horarios.length > 0 && (
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Clock className="w-6 h-6 text-gray-900" />
-                        </div>
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900 mb-3">Horarios</h4>
-                          <div className="space-y-2">
-                            {currentSede.horarios.map((horario, idx) => (
-                              <div key={idx} className="flex justify-between items-center text-sm">
-                                <div>
-                                  <span className="font-medium text-gray-900 capitalize">{horario.dia}</span>
-                                  <span className="text-gray-500 ml-2">- {horario.tipo}</span>
-                                </div>
-                                <span className="text-gray-900 font-semibold">{horario.hora}</span>
-                              </div>
-                            ))}
+                      {/* Phone */}
+                      {sede.telefono && (
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center flex-shrink-0">
+                            <Phone className="w-5 h-5 text-gray-600" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-sm font-semibold text-gray-900 mb-1">Teléfono</p>
+                            <a
+                              href={`tel:${sede.telefono}`}
+                              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                            >
+                              {sede.telefono}
+                            </a>
                           </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+
+                      {/* Schedule */}
+                      {sede.horarios && sede.horarios.length > 0 && (
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center flex-shrink-0">
+                            <Clock className="w-5 h-5 text-gray-600" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-sm font-semibold text-gray-900 mb-2">Horarios</p>
+                            <div className="space-y-1.5">
+                              {sede.horarios.slice(0, 3).map((horario, idx) => (
+                                <div key={idx} className="flex items-center justify-between text-xs">
+                                  <div>
+                                    <span className="font-medium text-gray-900">{horario.dia}</span>
+                                    <span className="text-gray-500 ml-1">- {horario.tipo}</span>
+                                  </div>
+                                  <span className="text-gray-900 font-semibold">{horario.hora}</span>
+                                </div>
+                              ))}
+                              {sede.horarios.length > 3 && (
+                                <p className="text-xs text-gray-400 mt-1">
+                                  +{sede.horarios.length - 3} más
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navegación */}
-          {sedes.length > 1 && (
-            <>
-              <button
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-900 hover:text-white transition-all group"
-                aria-label="Sede anterior"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-900 hover:text-white transition-all group"
-                aria-label="Siguiente sede"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </>
-          )}
-
-          {/* Indicadores */}
-          {sedes.length > 1 && (
-            <div className="flex justify-center gap-2 mt-8">
-              {sedes.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentIndex(idx)}
-                  className={`h-2 rounded-full transition-all ${
-                    idx === currentIndex
-                      ? "w-8 bg-gray-900"
-                      : "w-2 bg-gray-300 hover:bg-gray-600"
-                  }`}
-                  aria-label={`Ir a sede ${idx + 1}`}
-                />
+                </motion.article>
               ))}
             </div>
-          )}
-        </div>
+
+            {/* Mobile Scroll Indicator */}
+            {filteredSedes.length > 1 && (
+              <div className="lg:hidden flex items-center justify-center gap-2 mt-6 text-gray-400 text-sm">
+                <span>Desliza para ver más</span>
+                <ChevronRight className="w-4 h-4 animate-pulse" />
+              </div>
+            )}
+          </div>
+        )}
       </div>
+
+      {/* Hide scrollbar CSS */}
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
   );
 }

@@ -94,40 +94,49 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
     contactInfo.redesSociales?.instagram && {
       icon: <Instagram className="w-6 h-6" />,
       label: "Instagram",
-      value: "@lacasadelabendicion",
-      href: contactInfo.redesSociales.instagram,
+      value: "@lcbcentral",
+      href: "https://www.instagram.com/lcbcentral/",
     },
     contactInfo.redesSociales?.facebook && {
       icon: <Facebook className="w-6 h-6" />,
       label: "Facebook",
-      value: contactInfo.nombreIglesia,
-      href: contactInfo.redesSociales.facebook,
+      value: "La Casa de la Bendición",
+      href: "https://www.facebook.com/lcbcentral?locale=es_LA",
     },
     contactInfo.redesSociales?.youtube && {
       icon: <Youtube className="w-6 h-6" />,
       label: "YouTube",
-      value: "@lacasadelabendicion",
-      href: contactInfo.redesSociales.youtube,
+      value: "La Casa de la Bendición",
+      href: "https://www.youtube.com/@LCBCENTRAL",
     },
   ].filter(Boolean) as Array<{ icon: React.ReactElement; label: string; value: string; href: string }>;
 
   return (
-    <section id="contacto" className="py-20 bg-white">
-      <div className="container">
+    <section id="contacto" className="py-20 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          transition={{ duration: 0.6 }}
+          className="mb-12"
         >
-          <div className="inline-block px-4 py-2 bg-gray-100 rounded-full mb-4">
-            <span className="text-sm font-semibold text-gray-900">Contacto</span>
+          {/* Eyebrow */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-1 h-6 bg-lcb-accent rounded-full" />
+            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gray-500">
+              Visítanos
+            </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Conectate con Nosotros
+          
+          {/* Title */}
+          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-3 tracking-tight leading-tight">
+            Planificá tu Visita
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Nos encantaría escucharte. Completá el formulario o contactanos directamente.
+          
+          {/* Subtitle */}
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl font-light leading-relaxed">
+            Queremos conocerte. Déjanos tus datos y te ayudamos a dar el primer paso.
           </p>
         </motion.div>
 
@@ -137,8 +146,61 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-2 space-y-6"
           >
+            {/* Header */}
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Información útil</h3>
+            
+            {/* Dirección */}
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center text-gray-900 flex-shrink-0">
+                <MapPin className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500 mb-1">Dirección</p>
+                <p className="font-semibold text-gray-900">{contactInfo.direccion}</p>
+                {contactInfo.ciudad && (
+                  <p className="text-gray-600">{contactInfo.ciudad}</p>
+                )}
+                {contactInfo.googleMapsUrl && (
+                  <a
+                    href={contactInfo.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 hover:text-gray-900 transition-colors text-sm mt-1 inline-block"
+                  >
+                    Ver en Google Maps →
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {/* Horarios */}
+            {contactInfo.horarios && contactInfo.horarios.length > 0 && (
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <Clock className="w-6 h-6 text-gray-900" />
+                  <h4 className="text-lg font-bold text-gray-900">Horarios de Reuniones</h4>
+                </div>
+                <div className="space-y-3 pl-9">
+                  {contactInfo.horarios.map((horario, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center border-b border-gray-200 pb-2"
+                    >
+                      <div>
+                        <p className="font-semibold capitalize text-gray-900">{horario.dia}</p>
+                        <p className="text-sm text-gray-500">{horario.tipo}</p>
+                      </div>
+                      <p className="text-gray-900 font-semibold">{horario.hora}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Contact Details */}
             {contactDetails.map((item, index) => (
               <div key={index} className="flex items-start gap-4">
                 <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center text-gray-900 flex-shrink-0">
@@ -157,54 +219,6 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
                 </div>
               </div>
             ))}
-
-            {/* Horarios */}
-            {contactInfo.horarios && contactInfo.horarios.length > 0 && (
-              <div className="pt-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Clock className="w-6 h-6 text-gray-900" />
-                  <h3 className="text-lg font-bold text-gray-900">Horarios de Reuniones</h3>
-                </div>
-                <div className="space-y-3">
-                  {contactInfo.horarios.map((horario, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center border-b border-gray-200 pb-2"
-                    >
-                      <div>
-                        <p className="font-semibold capitalize text-gray-900">{horario.dia}</p>
-                        <p className="text-sm text-gray-500">{horario.tipo}</p>
-                      </div>
-                      <p className="text-gray-900 font-semibold">{horario.hora}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Dirección */}
-            <div className="flex items-start gap-4">
-              <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center text-gray-900 flex-shrink-0">
-                <MapPin className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Dirección</p>
-                <p className="font-semibold text-gray-900">{contactInfo.direccion}</p>
-                {contactInfo.ciudad && (
-                  <p className="text-gray-600">{contactInfo.ciudad}</p>
-                )}
-                {contactInfo.googleMapsUrl && (
-                  <a
-                    href={contactInfo.googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 hover:text-gray-900 transition-colors text-sm mt-1 inline-block"
-                  >
-                    Ver en Google Maps →
-                  </a>
-                )}
-              </div>
-            </div>
           </motion.div>
 
           {/* Form - 3 columnas */}
@@ -212,6 +226,7 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-3"
           >
             <form
@@ -280,7 +295,7 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
                   htmlFor="message"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Mensaje *
+                  ¿Cómo podemos ayudarte? *
                 </label>
                 <textarea
                   id="message"
@@ -290,7 +305,7 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
                   onChange={handleChange}
                   rows={5}
                   className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all resize-none"
-                  placeholder="Contanos cómo podemos ayudarte..."
+                  placeholder="Contanos tu consulta o cómo quisieras que te ayudemos..."
                 />
               </div>
 
@@ -317,14 +332,14 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
                   "¡Mensaje enviado!"
                 ) : (
                   <>
-                    Enviar mensaje
+                    Planificar mi visita
                     <Send className="w-5 h-5" />
                   </>
                 )}
               </button>
 
               <p className="text-sm text-gray-500 text-center mt-4">
-                Al enviar este formulario aceptás nuestra política de privacidad.
+                Un líder de nuestro equipo se comunicará contigo.
               </p>
             </form>
           </motion.div>

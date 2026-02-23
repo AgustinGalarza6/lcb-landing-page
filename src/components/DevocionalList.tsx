@@ -63,7 +63,7 @@ export default function DevocionalList({ devocionales }: DevocionalListProps) {
             Blog & Devocionales
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Reflexiones y enseñanzas para fortalecer tu fe cada día
+            Pensamientos, enseñanzas y palabra para tu vida diaria.
           </p>
         </motion.div>
 

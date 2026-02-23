@@ -21,7 +21,7 @@ export const HeroSection: GlobalConfig = {
       admin: {
         description: "Texto secundario debajo del título principal",
       },
-      defaultValue: "Un lugar donde experimentas el amor de Dios y encuentras comunidad",
+      defaultValue: "Nuestra visión es el mundo, nuestra pasión son las almas.",
     },
     {
       name: "imagenFondo",
