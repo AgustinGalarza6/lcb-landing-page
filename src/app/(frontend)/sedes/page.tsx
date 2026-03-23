@@ -5,8 +5,8 @@ import SedesCarousel from "@/components/SedesCarousel";
 import ContactSection from "@/components/ContactSection";
 
 export const metadata: Metadata = {
-  title: "Sedes - La Casa de la Bendición",
-  description: "Nuestras ubicaciones y horarios de reunión",
+  title: "Sedes - La Casa de la BendiciÃ³n",
+  description: "Nuestras ubicaciones y horarios de reuniÃ³n",
 };
 
 export const revalidate = 60;
@@ -29,10 +29,10 @@ export default async function SedesPage() {
             <span className="font-semibold">Nuestras Ubicaciones</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-serif font-bold text-[#B45309] mb-6">
-            Dónde Estamos
+            DÃ³nde Estamos
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Visítanos en cualquiera de nuestras sedes
+            VisÃ­tanos en cualquiera de nuestras sedes
           </p>
         </div>
 

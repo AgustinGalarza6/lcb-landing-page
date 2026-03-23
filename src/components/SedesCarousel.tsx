@@ -145,7 +145,7 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
               <>
                 <button
                   onClick={() => scroll("left")}
-                  className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10 w-12 h-12 items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all duration-300 hover:scale-110"
+                  className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10 w-12 h-12 items-center justify-center bg-white rounded-none shadow-lg hover:bg-gray-100 transition-all duration-300 hover:scale-110"
                   aria-label="Anterior"
                 >
                   <ChevronRight className="w-6 h-6 text-gray-900 rotate-180" />
@@ -153,7 +153,7 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
 
                 <button
                   onClick={() => scroll("right")}
-                  className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10 w-12 h-12 items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all duration-300 hover:scale-110"
+                  className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10 w-12 h-12 items-center justify-center bg-white rounded-none shadow-lg hover:bg-gray-100 transition-all duration-300 hover:scale-110"
                   aria-label="Siguiente"
                 >
                   <ChevronRight className="w-6 h-6 text-gray-900" />

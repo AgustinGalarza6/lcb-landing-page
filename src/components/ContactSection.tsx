@@ -142,7 +142,7 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
           <div className="space-y-6">
             {/* Address */}
             <div className="flex items-start gap-4 group">
-              <div className="w-11 h-11 rounded-xl bg-black text-white/10 border border-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-black text-white/20 transition-colors">
+              <div className="w-11 h-11 rounded-none bg-black text-white/10 border border-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-black text-white/20 transition-colors">
                 <MapPin className="w-5 h-5 text-gray-300" />
               </div>
               <div>
@@ -161,7 +161,7 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
             {/* Schedule */}
             {contactInfo.horarios && contactInfo.horarios.length > 0 && (
               <div className="flex items-start gap-4">
-                <div className="w-11 h-11 rounded-xl bg-black text-white/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
+                <div className="w-11 h-11 rounded-none bg-black text-white/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
                   <Clock className="w-5 h-5 text-gray-300" />
                 </div>
                 <div className="flex-1">
@@ -184,7 +184,7 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
             {/* Contact links */}
             {contactDetails.slice(0, 3).map((item, i) => (
               <div key={i} className="flex items-center gap-4 group">
-                <div className="w-11 h-11 rounded-xl bg-black text-white/10 border border-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-black text-white/20 transition-colors">
+                <div className="w-11 h-11 rounded-none bg-black text-white/10 border border-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-black text-white/20 transition-colors">
                   <span className="text-gray-300">{item.icon}</span>
                 </div>
                 <div>
@@ -202,19 +202,19 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
             <div className="flex items-center gap-3 pt-4">
               {contactInfo.redesSociales?.facebook && (
                 <a href={contactInfo.redesSociales.facebook} target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/5 hover:bg-black text-white border border-white/10 hover:border-accent flex items-center justify-center transition-all duration-300">
+                  className="w-10 h-10 rounded-none bg-white/5 hover:bg-black text-white border border-white/10 hover:border-accent flex items-center justify-center transition-all duration-300">
                   <Facebook className="w-4 h-4 text-white" />
                 </a>
               )}
               {contactInfo.redesSociales?.instagram && (
                 <a href={contactInfo.redesSociales.instagram} target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/5 hover:bg-black text-white border border-white/10 hover:border-accent flex items-center justify-center transition-all duration-300">
+                  className="w-10 h-10 rounded-none bg-white/5 hover:bg-black text-white border border-white/10 hover:border-accent flex items-center justify-center transition-all duration-300">
                   <Instagram className="w-4 h-4 text-white" />
                 </a>
               )}
               {contactInfo.redesSociales?.youtube && (
                 <a href={contactInfo.redesSociales.youtube} target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/5 hover:bg-black text-white border border-white/10 hover:border-accent flex items-center justify-center transition-all duration-300">
+                  className="w-10 h-10 rounded-none bg-white/5 hover:bg-black text-white border border-white/10 hover:border-accent flex items-center justify-center transition-all duration-300">
                   <Youtube className="w-4 h-4 text-white" />
                 </a>
               )}

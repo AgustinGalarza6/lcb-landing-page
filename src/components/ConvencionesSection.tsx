@@ -83,7 +83,7 @@ export default function ConvencionesSection({ convenciones }: ConvencionesSectio
 
   return (
     <section id="convenciones" className="py-20 bg-white overflow-hidden">
-      <div className="container max-w-[1400px]">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header - Compact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -111,14 +111,14 @@ export default function ConvencionesSection({ convenciones }: ConvencionesSectio
           <div className="hidden md:flex items-center gap-2">
             <button
               onClick={() => scroll('left')}
-              className="w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+              className="w-12 h-12 rounded-none bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
               aria-label="Anterior"
             >
               <ChevronRight className="w-6 h-6 text-gray-900 rotate-180" />
             </button>
             <button
               onClick={() => scroll('right')}
-              className="w-12 h-12 rounded-full bg-black hover:bg-black-dark flex items-center justify-center transition-colors shadow-sm"
+              className="w-12 h-12 rounded-none bg-black hover:bg-neutral-800 flex items-center justify-center transition-colors shadow-sm"
               aria-label="Siguiente"
             >
               <ChevronRight className="w-6 h-6 text-white" />
@@ -189,7 +189,7 @@ export default function ConvencionesSection({ convenciones }: ConvencionesSectio
 
                         {/* Hashtag Badge */}
                         {convencion.hashtag && isFeatured && (
-                          <div className="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+                          <div className="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md px-4 py-2 rounded-none border border-white/20">
                             <span className="text-white text-sm font-semibold tracking-wide">{convencion.hashtag}</span>
                           </div>
                         )}

@@ -68,7 +68,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="group w-12 h-12 bg-white/5 hover:bg-white rounded-xl flex items-center justify-center transition-all duration-300 hover:shadow-lg border border-white/10 hover:border-white hover:-translate-y-1"
+                  className="group w-12 h-12 bg-white/5 hover:bg-white rounded-none flex items-center justify-center transition-all duration-300 hover:shadow-lg border border-white/10 hover:border-white hover:-translate-y-1"
                 >
                   <span className="text-white/50 group-hover:text-white transition-colors">{icon}</span>
                 </a>

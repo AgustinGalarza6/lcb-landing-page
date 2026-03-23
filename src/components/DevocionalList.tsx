@@ -22,12 +22,12 @@ interface DevocionalListProps {
   showAll?: boolean;
 }
 
-export default function DevocionalList({ devocionales }: DevocionalListProps) {
+export default function DevocionalList({ devocionales, showAll }: DevocionalListProps) {
   // Si no hay devocionales, mostrar mensaje
   if (!devocionales || devocionales.length === 0) {
     return (
       <section id="devocionales" className="py-24 bg-white">
-        <div className="container">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-4xl md:text-5xl font-serif font-medium text-black mb-6 tracking-tight leading-[0.9]">
               Blog & Devocionales
@@ -47,25 +47,27 @@ export default function DevocionalList({ devocionales }: DevocionalListProps) {
 
   return (
     <section id="devocionales" className="py-24 bg-white">
-      <div className="container">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white shadow-sm rounded-full mb-4">
-            <BookOpen className="w-5 h-5 text-black" />
-            <span className="text-xs uppercase tracking-[0.2em] font-medium text-primary">Contenido Devocional</span>
-          </div>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif text-primary mb-6 leading-[0.9] tracking-tight">
-            Blog & Devocionales
-          </h2>
-          <p className="text-lg md:text-xl text-secondary max-w-2xl mx-auto font-light text-balance">
-            Pensamientos, enseñanzas y palabra para tu vida diaria.
-          </p>
-        </motion.div>
+        {!showAll && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white shadow-sm rounded-full mb-4">
+              <BookOpen className="w-5 h-5 text-black" />
+              <span className="text-xs uppercase tracking-[0.2em] font-medium text-primary">Contenido Devocional</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif text-primary mb-6 leading-[0.9] tracking-tight">
+              Blog & Devocionales
+            </h2>
+            <p className="text-lg md:text-xl text-secondary max-w-2xl mx-auto font-light text-balance">
+              Pensamientos, enseñanzas y palabra para tu vida diaria.
+            </p>
+          </motion.div>
+        )}
 
         {/* Grid de devocionales */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
@@ -140,20 +142,22 @@ export default function DevocionalList({ devocionales }: DevocionalListProps) {
         </div>
 
         {/* Ver todos button */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <Link
-            href="/devocionales"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white font-medium tracking-wide rounded-full shadow-sm hover:shadow-md transition-all duration-500 hover:bg-black-dark hover:scale-[1.02] text-sm"
+        {!showAll && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center"
           >
-            Ver todos los devocionales
-            <BookOpen className="w-4 h-4 ml-1" />
-          </Link>
-        </motion.div>
+            <Link
+              href="/devocionales"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white font-medium tracking-wide rounded-none uppercase font-bold tracking-widest shadow-sm hover:shadow-md transition-all duration-500 hover:bg-neutral-800 hover:scale-[1.02] text-sm"
+            >
+              Ver todos los devocionales
+              <BookOpen className="w-4 h-4 ml-1" />
+            </Link>
+          </motion.div>
+        )}
       </div>
     </section>
   );

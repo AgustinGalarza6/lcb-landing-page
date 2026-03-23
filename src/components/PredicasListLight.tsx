@@ -20,7 +20,7 @@ interface PredicasListProps {
   showAll?: boolean;
 }
 
-export default function PredicasList({ predicas }: PredicasListProps) {
+export default function PredicasListLight({ predicas, showAll }: PredicasListProps) {
   if (!predicas || predicas.length === 0) {
     return (
       <section id="predicas" className="py-20 bg-white">
@@ -58,29 +58,31 @@ export default function PredicasList({ predicas }: PredicasListProps) {
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6"
-        >
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-px bg-primary" />
-              <span className="text-primary text-xs uppercase tracking-[0.3em] font-medium">Mensajes que Transforman</span>
-            </div>
-            <h2 className="text-5xl md:text-7xl font-serif text-primary tracking-tight leading-[0.9]">
-              Prédicas
-            </h2>
-          </div>
-          <Link
-            href="/predicas"
-            className="group flex items-center gap-2 text-secondary hover:text-black text-sm font-medium transition-colors"
+        {!showAll && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6"
           >
-            Ver todas
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-px bg-black" />
+                <span className="text-primary text-xs uppercase tracking-[0.3em] font-medium">Mensajes que Transforman</span>
+              </div>
+              <h2 className="text-5xl md:text-7xl font-serif text-primary tracking-tight leading-[0.9]">
+                Prédicas
+              </h2>
+            </div>
+            <Link
+              href="/predicas"
+              className="group flex items-center gap-2 text-secondary hover:text-black text-sm font-medium transition-colors"
+            >
+              Ver todas
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
+        )}
 
         {/* Featured + Grid layout */}
         <div className="grid lg:grid-cols-2 gap-6 mb-6">
@@ -93,7 +95,7 @@ export default function PredicasList({ predicas }: PredicasListProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="group relative rounded-2xl overflow-hidden bg-primary block shadow-2xl shadow-black/5"
+            className="group relative rounded-none overflow-hidden bg-white block shadow-2xl shadow-black/5"
           >
             <div className="relative aspect-[16/10]">
               <img
@@ -105,18 +107,18 @@ export default function PredicasList({ predicas }: PredicasListProps) {
               <div className="absolute inset-0 flex items-center justify-center">
                 <motion.div
                   whileHover={{ scale: 1.1 }}
-                  className="w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-xl shadow-black/50 box-border border-4 border-black/10"
+                  className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-xl shadow-black/50 box-border border-4 border-black/10"
                 >
-                  <Play className="w-6 h-6 fill-white text-white ml-0.5" />
+                  <Play className="w-6 h-6 fill-white text-primary ml-0.5" />
                 </motion.div>
               </div>
             </div>
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-              <span className="inline-block px-3 py-1 bg-black text-white text-[10px] font-bold uppercase tracking-wider rounded-full mb-3">
+              <span className="inline-block px-3 py-1 bg-black text-white text-[10px] font-bold uppercase tracking-wider rounded-none mb-3">
                 Prédica destacada
               </span>
-              <h3 className="text-3xl md:text-4xl font-serif font-medium text-white leading-tight mb-2">{featured.titulo}</h3>
-              <p className="text-white/60 text-sm">
+              <h3 className="text-3xl md:text-4xl font-serif font-medium text-primary leading-tight mb-2">{featured.titulo}</h3>
+              <p className="text-primary/60 text-sm">
                 {featured.predicador} •{" "}
                 {new Date(featured.fecha).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })}
               </p>
@@ -135,16 +137,16 @@ export default function PredicasList({ predicas }: PredicasListProps) {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="group flex gap-4 p-4 rounded-xl bg-white hover:bg-gray-50 border border-gray-100 shadow-sm hover:shadow-md hover:border-black/30 transition-all duration-300"
+                className="group flex gap-4 p-4 rounded-none bg-white hover:bg-gray-50 border border-gray-100 shadow-sm hover:shadow-md hover:border-black/30 transition-all duration-300"
               >
-                <div className="relative w-32 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+                <div className="relative w-32 h-20 flex-shrink-0 rounded-none overflow-hidden bg-gray-100">
                   <img
                     src={getThumbnail(predica)}
                     alt={predica.titulo}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 flex items-center justify-center bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Play className="w-5 h-5 fill-white text-white" />
+                  <div className="absolute inset-0 flex items-center justify-center bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Play className="w-5 h-5 fill-white text-primary" />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0 flex flex-col justify-center">
@@ -166,22 +168,24 @@ export default function PredicasList({ predicas }: PredicasListProps) {
         </div>
 
         {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center pt-8"
-        >
-          <Link
-            href="/predicas"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-black text-white font-medium tracking-wide rounded-full hover:bg-black-dark transition-all duration-500 hover:shadow-lg hover:shadow-black/20 text-sm"
+        {!showAll && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center pt-8"
           >
-            Explorar todos los mensajes
-            <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
-              <Play className="w-3 h-3 fill-white ml-0.5" />
-            </span>
-          </Link>
-        </motion.div>
+            <Link
+              href="/predicas"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-black text-white font-medium tracking-wide rounded-none hover:bg-neutral-800 transition-all duration-500 hover:shadow-lg hover:shadow-black/20 text-sm"
+            >
+              Explorar todos los mensajes
+              <span className="w-6 h-6 rounded-none bg-white/20 flex items-center justify-center">
+                <Play className="w-3 h-3 fill-white ml-0.5" />
+              </span>
+            </Link>
+          </motion.div>
+        )}
       </div>
     </section>
   );

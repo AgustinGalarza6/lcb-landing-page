@@ -2,9 +2,11 @@ import { Metadata } from "next";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import DevocionalList from "@/components/DevocionalList";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Devocionales - La Casa de la Bendición",
+  title: "Devocionales - La Casa de la BendiciÃ³n",
   description: "Contenido devocional y apuntes de nuestros pastores",
 };
 
@@ -20,24 +22,29 @@ export default async function DevocionalPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary mb-6">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-            </svg>
-            <span className="font-semibold">Contenido Devocional</span>
-          </div>
-          <h1 className="text-5xl md:text-6xl font-serif font-bold text-[#B45309] mb-6">
-            Devocionales
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Reflexiones y apuntes de nuestros pastores para tu crecimiento espiritual
-          </p>
+    <div className="min-h-screen bg-white pt-32 pb-0">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="flex justify-end w-full">
+          <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-primary hover:text-black mb-10 group">
+            Volver
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-8 h-px bg-primary" />
+          <span className="text-xs uppercase tracking-[0.3em] font-medium text-primary">
+            Contenido Devocional
+          </span>
+        </div>
+        <h1 className="text-5xl md:text-7xl font-serif text-primary tracking-tight leading-[0.9]">
+          Devocionales
+        </h1>
+        <p className="mt-6 text-xl text-secondary max-w-2xl font-light leading-relaxed">
+          Reflexiones y apuntes de nuestros pastores para tu crecimiento espiritual.
+        </p>
+      </div>
 
-        <DevocionalList
+      <DevocionalList
           devocionales={devocionales.docs.map((dev) => ({
             id: dev.id,
             titulo: dev.titulo,
@@ -50,9 +57,8 @@ export default async function DevocionalPage() {
                 ? { url: dev.imagenPortada.url, alt: dev.imagenPortada.alt || undefined }
                 : undefined,
           }))}
-          showAll={true}
-        />
-      </div>
+        showAll={true}
+      />
     </div>
   );
 }

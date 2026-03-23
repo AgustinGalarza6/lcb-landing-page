@@ -19,7 +19,6 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { href: "#inicio", label: "Inicio" },
     { href: "#predicas", label: "Prédicas" },
     { href: "#eventos", label: "Eventos" },
     { href: "#actividades", label: "Actividades" },
@@ -44,9 +43,9 @@ export default function Navbar() {
               transition={{ duration: 0.2 }}
               className="w-11 h-11 rounded-lg overflow-hidden"
             >
-              <img 
+              <img
                 src="/media/LaCasaDeLaBendiciónLogo-Negro.png"
-                alt="La Casa de la Bendición Logo" 
+                alt="La Casa de la Bendición Logo"
                 className="w-full h-full object-contain"
               />
             </motion.div>
