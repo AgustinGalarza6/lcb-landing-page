@@ -30,13 +30,13 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
   // Si no hay sedes, mostrar mensaje
   if (!sedes || sedes.length === 0) {
     return (
-      <section id="sedes" className="py-20 bg-white overflow-hidden">
+      <section id="sedes" className="py-24 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif font-medium text-black mb-6 leading-[0.9] tracking-tight">
               Nuestras Sedes
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-secondary font-light text-balance">
               Próximamente agregaremos información sobre nuestras sedes.
             </p>
           </div>
@@ -73,7 +73,7 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
   };
 
   return (
-    <section id="sedes" className="py-20 bg-white overflow-hidden">
+    <section id="sedes" className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -85,19 +85,19 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
         >
           {/* Eyebrow */}
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 bg-lcb-accent rounded-full" />
-            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gray-500">
+            <div className="w-1 h-6 bg-black rounded-full" />
+            <span className="text-xs uppercase tracking-[0.3em] font-medium text-secondary">
               Encuéntranos
             </span>
           </div>
           
           {/* Title */}
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-3 tracking-tight leading-tight">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif text-primary mb-6 tracking-tight leading-[0.9]">
             Nuestras Sedes
           </h2>
           
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl font-light leading-relaxed mb-8">
+          <p className="text-lg md:text-xl text-secondary max-w-2xl font-light leading-relaxed mb-10 text-balance">
             Un espacio cerca de ti donde siempre serás bienvenido.
           </p>
 
@@ -111,7 +111,7 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
               placeholder="Buscar por localidad (ej: Rafael Calzada)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-14 pr-6 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all text-lg font-light"
+              className="w-full pl-14 pr-6 py-4 bg-white border border-gray-200 rounded-2xl text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent shadow-sm focus:border-transparent transition-all text-lg font-light"
             />
             {searchQuery && (
               <button
@@ -175,9 +175,9 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
                   className="group flex-shrink-0 snap-start w-[85vw] sm:w-[450px] lg:w-[500px]"
                 >
                   {/* Card */}
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300 h-full">
                     {/* Image */}
-                    <div className="relative h-64 bg-gray-900">
+                    <div className="relative h-64 bg-gray-100">
                       {sede.imagen ? (
                         <img
                           src={sede.imagen}
@@ -195,7 +195,7 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
                       
                       {/* Title on image */}
                       <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <h3 className="text-2xl font-bold text-white mb-1">
+                        <h3 className="text-3xl font-serif font-medium text-white mb-1 leading-tight text-balance">
                           {sede.nombre}
                         </h3>
                         {sede.ciudad && (
@@ -208,18 +208,18 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
                     <div className="p-6 space-y-4">
                       {/* Address */}
                       <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <MapPin className="w-5 h-5 text-gray-600" />
+                        <div className="w-10 h-10 bg-black/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <MapPin className="w-5 h-5 text-black" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-gray-900 mb-1">Dirección</p>
-                          <p className="text-sm text-gray-600 leading-relaxed">{sede.direccion}</p>
+                          <p className="text-sm font-semibold text-primary mb-1">Dirección</p>
+                          <p className="text-sm text-secondary leading-relaxed">{sede.direccion}</p>
                           {sede.googleMapsUrl && (
                             <a
                               href={sede.googleMapsUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 text-gray-900 hover:text-gray-600 transition-colors text-xs mt-2 font-medium"
+                              className="inline-flex items-center gap-1 text-black hover:text-black-dark transition-colors text-xs mt-2 font-medium"
                             >
                               <Navigation className="w-3 h-3" />
                               Cómo llegar
@@ -231,14 +231,14 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
                       {/* Phone */}
                       {sede.telefono && (
                         <div className="flex items-start gap-3">
-                          <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center flex-shrink-0">
-                            <Phone className="w-5 h-5 text-gray-600" />
+                          <div className="w-10 h-10 bg-black/10 rounded-full flex items-center justify-center flex-shrink-0">
+                            <Phone className="w-5 h-5 text-black" />
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm font-semibold text-gray-900 mb-1">Teléfono</p>
+                            <p className="text-sm font-semibold text-primary mb-1">Teléfono</p>
                             <a
                               href={`tel:${sede.telefono}`}
-                              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                              className="text-sm text-secondary hover:text-primary transition-colors"
                             >
                               {sede.telefono}
                             </a>
@@ -249,19 +249,19 @@ export default function SedesCarousel({ sedes }: SedesCarouselProps) {
                       {/* Schedule */}
                       {sede.horarios && sede.horarios.length > 0 && (
                         <div className="flex items-start gap-3">
-                          <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center flex-shrink-0">
-                            <Clock className="w-5 h-5 text-gray-600" />
+                          <div className="w-10 h-10 bg-black/10 rounded-full flex items-center justify-center flex-shrink-0">
+                            <Clock className="w-5 h-5 text-black" />
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm font-semibold text-gray-900 mb-2">Horarios</p>
+                            <p className="text-sm font-semibold text-primary mb-2">Horarios</p>
                             <div className="space-y-1.5">
                               {sede.horarios.slice(0, 3).map((horario, idx) => (
                                 <div key={idx} className="flex items-center justify-between text-xs">
                                   <div>
-                                    <span className="font-medium text-gray-900">{horario.dia}</span>
-                                    <span className="text-gray-500 ml-1">- {horario.tipo}</span>
+                                    <span className="font-medium text-primary">{horario.dia}</span>
+                                    <span className="text-secondary/80 ml-1">- {horario.tipo}</span>
                                   </div>
-                                  <span className="text-gray-900 font-semibold">{horario.hora}</span>
+                                  <span className="text-primary font-semibold">{horario.hora}</span>
                                 </div>
                               ))}
                               {sede.horarios.length > 3 && (

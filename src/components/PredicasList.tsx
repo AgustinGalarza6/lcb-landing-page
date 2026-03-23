@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Play } from "lucide-react";
+import { Play, ArrowUpRight, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 interface Predica {
@@ -12,9 +12,7 @@ interface Predica {
   predicador: string;
   fecha: string;
   versiculo?: string | null;
-  miniatura?: {
-    url?: string | null;
-  } | string | null;
+  miniatura?: { url?: string | null } | string | null;
 }
 
 interface PredicasListProps {
@@ -23,170 +21,165 @@ interface PredicasListProps {
 }
 
 export default function PredicasList({ predicas }: PredicasListProps) {
-  // Si no hay predicas, mostrar mensaje
   if (!predicas || predicas.length === 0) {
     return (
       <section id="predicas" className="py-20 bg-white">
         <div className="container">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Nuevos Mensajes Próximamente
-            </h2>
-            <p className="text-lg text-gray-500 font-light">
-              Estamos preparando contenido que inspire y transforme vidas.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-black mb-4">Nuevos Mensajes Próximamente</h2>
+            <p className="text-lg text-secondary font-light text-balance">Estamos preparando contenido que inspire y transforme vidas.</p>
           </div>
         </div>
       </section>
     );
   }
 
-  const extractVideoId = (videoIdOrUrl: string): string => {
-    // Si es una URL completa de YouTube, extraer el ID
-    if (videoIdOrUrl.includes('youtube.com') || videoIdOrUrl.includes('youtu.be')) {
-      const urlParams = new URLSearchParams(videoIdOrUrl.split('?')[1]);
-      return urlParams.get('v') || videoIdOrUrl.split('/').pop() || videoIdOrUrl;
+  const extractVideoId = (v: string) => {
+    if (v.includes("youtube.com") || v.includes("youtu.be")) {
+      const p = new URLSearchParams(v.split("?")[1]);
+      return p.get("v") || v.split("/").pop() || v;
     }
-    // Si ya es solo el ID, devolverlo
-    return videoIdOrUrl;
+    return v;
   };
 
   const getThumbnail = (predica: Predica) => {
-    // Si hay miniatura personalizada, usarla
     if (predica.miniatura) {
-      if (typeof predica.miniatura === 'string') {
-        return predica.miniatura;
-      }
-      if (predica.miniatura.url) {
-        return predica.miniatura.url;
-      }
+      if (typeof predica.miniatura === "string") return predica.miniatura;
+      if (predica.miniatura.url) return predica.miniatura.url;
     }
-    // Si no, usar miniatura de YouTube
-    const videoId = extractVideoId(predica.youtubeVideoId);
-    return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    return `https://img.youtube.com/vi/${extractVideoId(predica.youtubeVideoId)}/maxresdefault.jpg`;
   };
+
+  const featured = predicas[0];
+  const rest = predicas.slice(1, 5);
 
   return (
     <section id="predicas" className="py-24 bg-white">
-      <div className="container max-w-[1400px]">
-        {/* Header - Clean & Minimal */}
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-20"
+          className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6"
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 bg-lcb-accent rounded-full" />
-            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gray-500">
-              Mensajes que Transforman
-            </span>
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-px bg-primary" />
+              <span className="text-primary text-xs uppercase tracking-[0.3em] font-medium">Mensajes que Transforman</span>
+            </div>
+            <h2 className="text-5xl md:text-7xl font-serif text-primary tracking-tight leading-[0.9]">
+              Prédicas
+            </h2>
           </div>
-          <h2 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 tracking-tight leading-[0.95]">
-            Prédicas
-          </h2>
-          <p className="text-xl md:text-2xl text-gray-600 max-w-3xl font-light leading-relaxed">
-            Conversaciones honestas sobre fe, propósito y cómo vivir una vida con sentido.
-          </p>
+          <Link
+            href="/predicas"
+            className="group flex items-center gap-2 text-secondary hover:text-black text-sm font-medium transition-colors"
+          >
+            Ver todas
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </motion.div>
 
-        {/* Grid de prédicas - 3 columnas premium editorial */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-14 mb-20">
-          {predicas.map((predica, index) => (
-            <motion.article
-              key={predica.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              className="group bg-white"
-            >
-              <a 
+        {/* Featured + Grid layout */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-6">
+          {/* Featured predica */}
+          <motion.a
+            href={`https://www.youtube.com/watch?v=${extractVideoId(featured.youtubeVideoId)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="group relative rounded-2xl overflow-hidden bg-primary block shadow-2xl shadow-black/5"
+          >
+            <div className="relative aspect-[16/10]">
+              <img
+                src={getThumbnail(featured)}
+                alt={featured.titulo}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  className="w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-xl shadow-black/50 box-border border-4 border-black/10"
+                >
+                  <Play className="w-6 h-6 fill-white text-white ml-0.5" />
+                </motion.div>
+              </div>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+              <span className="inline-block px-3 py-1 bg-black text-white text-[10px] font-bold uppercase tracking-wider rounded-full mb-3">
+                Prédica destacada
+              </span>
+              <h3 className="text-3xl md:text-4xl font-serif font-medium text-white leading-tight mb-2">{featured.titulo}</h3>
+              <p className="text-white/60 text-sm">
+                {featured.predicador} â€¢{" "}
+                {new Date(featured.fecha).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })}
+              </p>
+            </div>
+          </motion.a>
+
+          {/* Rest list */}
+          <div className="flex flex-col gap-6">
+            {rest.map((predica, index) => (
+              <motion.a
+                key={predica.id}
                 href={`https://www.youtube.com/watch?v=${extractVideoId(predica.youtubeVideoId)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+                className="group flex gap-4 p-4 rounded-xl bg-white hover:bg-gray-50 border border-gray-100 shadow-sm hover:shadow-md hover:border-black/30 transition-all duration-300"
               >
-                {/* Thumbnail - Large & Dominant */}
-                <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-8 bg-gray-100">
+                <div className="relative w-32 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
                   <img
                     src={getThumbnail(predica)}
                     alt={predica.titulo}
-                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  
-                  {/* Subtle dark overlay on hover only */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
-                  
-                  {/* Minimalist play indicator - subtle */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-400">
-                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl">
-                      <Play className="w-7 h-7 text-gray-900 fill-gray-900 ml-0.5" />
-                    </div>
+                  <div className="absolute inset-0 flex items-center justify-center bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Play className="w-5 h-5 fill-white text-white" />
                   </div>
                 </div>
-
-                {/* Content - Editorial Typography Hierarchy */}
-                <div className="space-y-4">
-                  {/* Metadata line - Small & Subtle */}
-                  <div className="flex items-center gap-3 text-xs text-gray-400">
-                    <time className="font-normal">
-                      {new Date(predica.fecha).toLocaleDateString('es-ES', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                      })}
-                    </time>
-                    {predica.versiculo && (
-                      <>
-                        <span className="w-1 h-1 rounded-full bg-gray-300" />
-                        <span className="font-normal">{predica.versiculo}</span>
-                      </>
-                    )}
-                  </div>
-
-                  {/* Title - Large, Prominent, Editorial */}
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 leading-[1.15] tracking-tight group-hover:text-gray-700 transition-colors duration-300 min-h-[2.5rem]">
+                <div className="flex-1 min-w-0 flex flex-col justify-center">
+                  <h3 className="text-primary font-serif font-medium text-lg leading-tight mb-1 line-clamp-2 group-hover:text-black transition-colors">
                     {predica.titulo}
                   </h3>
-
-                  {/* Description - Supporting Text */}
-                  {predica.descripcion && (
-                    <p className="text-base text-gray-500 leading-relaxed line-clamp-2 font-light">
-                      {predica.descripcion}
-                    </p>
-                  )}
-
-                  {/* Attribution - Clean Source Line */}
-                  <div className="flex items-center gap-3 pt-3">
-                    <div className="w-11 h-11 rounded-full bg-gray-900 flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-sm font-semibold">
-                        {predica.predicador.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                      </span>
-                    </div>
-                    <p className="text-sm font-semibold text-gray-900">
-                      {predica.predicador}
+                  <div className="flex items-center gap-2">
+                    <p className="text-secondary text-xs">{predica.predicador}</p>
+                    <span className="text-gray-300">â€¢</span>
+                    <p className="text-secondary/70 text-xs text-nowrap">
+                      {new Date(predica.fecha).toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}
                     </p>
                   </div>
                 </div>
-              </a>
-            </motion.article>
-          ))}
+                <ArrowUpRight className="w-4 h-4 text-gray-300 group-hover:text-black flex-shrink-0 mt-2 transition-colors" />
+              </motion.a>
+            ))}
+          </div>
         </div>
 
-        {/* CTA - Clean & Simple */}
+        {/* CTA */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center pt-4"
+          className="text-center pt-8"
         >
           <Link
             href="/predicas"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-all duration-300 hover:gap-3 text-base"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-black text-white font-medium tracking-wide rounded-full hover:bg-black-dark transition-all duration-500 hover:shadow-lg hover:shadow-black/20 text-sm"
           >
             Explorar todos los mensajes
-            <Play className="w-4 h-4" />
+            <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+              <Play className="w-3 h-3 fill-white ml-0.5" />
+            </span>
           </Link>
         </motion.div>
       </div>

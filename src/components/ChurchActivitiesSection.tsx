@@ -77,7 +77,7 @@ export default function ChurchActivitiesSection() {
   };
 
   return (
-    <section className="relative py-16 md:py-20 lg:py-24 bg-gradient-to-br from-blue-950 via-blue-900 to-slate-950 overflow-hidden">
+    <section id="actividades" className="relative py-24 bg-primary overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -87,12 +87,18 @@ export default function ChurchActivitiesSection() {
           transition={{ duration: 0.6 }}
           className="mb-12 md:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">
-            Un lugar para ti
-          </h2>
-          <p className="text-xl md:text-2xl text-white/80 font-light max-w-3xl">
-            Espacios pensados para conectar, crecer y pertenecer
-          </p>
+          <div className="mb-12 md:mb-16">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-px bg-white text-black" />
+              <span className="text-white text-xs uppercase tracking-[0.3em] font-medium">Nuestras Actividades</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif text-white mb-4 leading-[0.9] tracking-tight">
+              Un lugar para ti
+            </h2>
+            <p className="text-xl md:text-2xl text-white/70 font-light max-w-3xl text-balance">
+              Espacios pensados para conectar, crecer y pertenecer
+            </p>
+          </div>
         </motion.div>
 
         {/* Slider Container */}
@@ -100,7 +106,7 @@ export default function ChurchActivitiesSection() {
           {/* Navigation Buttons - Desktop Only */}
           <button
             onClick={() => scroll("left")}
-            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10 w-12 h-12 items-center justify-center bg-white/10 backdrop-blur-md rounded-full shadow-lg hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-white/20"
+            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10 w-12 h-12 flex-none items-center justify-center bg-white/5 backdrop-blur-md rounded-full shadow-lg hover:bg-white text-black border border-white/10 hover:border-white-light transition-all duration-300"
             aria-label="Anterior"
           >
             <ChevronRight className="w-6 h-6 text-white rotate-180" />
@@ -108,7 +114,7 @@ export default function ChurchActivitiesSection() {
 
           <button
             onClick={() => scroll("right")}
-            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10 w-12 h-12 items-center justify-center bg-white/10 backdrop-blur-md rounded-full shadow-lg hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-white/20"
+            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10 w-12 h-12 flex-none items-center justify-center bg-white/5 backdrop-blur-md rounded-full shadow-lg hover:bg-white text-black border border-white/10 hover:border-white-light transition-all duration-300"
             aria-label="Siguiente"
           >
             <ChevronRight className="w-6 h-6 text-white" />
@@ -117,7 +123,7 @@ export default function ChurchActivitiesSection() {
           {/* Cards Container */}
           <div
             ref={scrollRef}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4"
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden pb-4"
           >
             {activities.map((activity, index) => (
               <motion.article
@@ -126,26 +132,28 @@ export default function ChurchActivitiesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group flex-shrink-0 snap-start w-[85vw] sm:w-[400px] lg:w-[450px]"
+                className="group flex-shrink-0 snap-start w-[85vw] sm:w-[360px] lg:w-[400px]"
               >
                 {/* Card */}
-                <div className="relative h-[500px] rounded-2xl overflow-hidden bg-gray-900">
+                <div className="relative h-[500px] rounded-2xl overflow-hidden bg-white/5 border border-white/5 group-hover:border-white/40 shadow-xl shadow-black/10 transition-colors duration-300">
                   {/* Background Image */}
                   <div className="absolute inset-0">
-                    <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900" />
+                    <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-950" />
                     {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
                   </div>
 
                   {/* Content */}
                   <div className="relative h-full flex flex-col justify-end p-8">
+                    {/* Accent dot */}
+                    <div className="w-8 h-1 bg-white text-black rounded-full mb-4" />
                     {/* Title */}
-                    <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                    <h3 className="text-3xl md:text-4xl font-serif font-medium text-white mb-4 leading-tight">
                       {activity.titulo}
                     </h3>
 
                     {/* Location */}
-                    <p className="text-base md:text-lg text-white/90 mb-6 font-light">
+                    <p className="text-base md:text-lg text-white/80 mb-6 font-light">
                       {activity.ubicacion}
                     </p>
 
@@ -175,11 +183,6 @@ export default function ChurchActivitiesSection() {
       </div>
 
       {/* Hide scrollbar CSS */}
-      <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   );
 }

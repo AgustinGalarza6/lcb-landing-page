@@ -22,6 +22,7 @@ export default function Navbar() {
     { href: "#inicio", label: "Inicio" },
     { href: "#predicas", label: "Prédicas" },
     { href: "#eventos", label: "Eventos" },
+    { href: "#actividades", label: "Actividades" },
     { href: "#convenciones", label: "Convenciones" },
     { href: "#devocionales", label: "Devocionales" },
     { href: "#sedes", label: "Sedes" },
@@ -32,11 +33,7 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out ${
-        isScrolled
-          ? "bg-white/95 backdrop-blur-xl shadow-sm border-b border-gray-100/50"
-          : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl shadow-sm border-b border-gray-100/50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -48,17 +45,13 @@ export default function Navbar() {
               className="w-11 h-11 rounded-lg overflow-hidden"
             >
               <img 
-                src={isScrolled ? "/media/LaCasaDeLaBendiciónLogo-Negro.png" : "/media/LaCasaDeLaBendiciónLogo.png"}
+                src="/media/LaCasaDeLaBendiciónLogo-Negro.png"
                 alt="La Casa de la Bendición Logo" 
-                className="w-full h-full object-contain transition-opacity duration-300"
+                className="w-full h-full object-contain"
               />
             </motion.div>
             <div className="hidden md:block">
-              <div
-                className={`font-serif font-bold text-lg tracking-tight transition-colors duration-300 ${
-                  isScrolled ? "text-gray-900" : "text-white"
-                }`}
-              >
+              <div className="font-serif font-medium text-xl tracking-wide text-primary">
                 La Casa de la Bendición
               </div>
             </div>
@@ -70,16 +63,10 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 group ${
-                  isScrolled 
-                    ? "text-gray-700 hover:text-lcb-primary" 
-                    : "text-white/90 hover:text-white"
-                }`}
+                className="relative px-4 py-2 text-sm font-medium text-gray-700 hover:text-black transition-colors duration-300 group"
               >
                 {link.label}
-                <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
-                  isScrolled ? "bg-lcb-primary" : "bg-white"
-                }`} />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </div>
@@ -88,11 +75,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center">
             <Link
               href="#contacto"
-              className={`px-8 py-3 text-sm font-semibold rounded-full transition-all duration-300 hover:shadow-xl hover:scale-105 ${
-                isScrolled
-                  ? "text-white bg-lcb-primary shadow-md hover:bg-lcb-primary/90"
-                  : "text-lcb-primary bg-white shadow-lg hover:bg-white/95 ring-1 ring-black/5"
-              }`}
+              className="px-8 py-4 text-xs font-bold uppercase tracking-widest rounded-none text-white bg-primary shadow-sm hover:bg-neutral-800 transition-all duration-500 hover:shadow-md"
             >
               Visítanos
             </Link>
@@ -101,9 +84,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`lg:hidden p-2 transition-colors duration-300 ${
-              isScrolled ? "text-gray-700 hover:text-lcb-primary" : "text-white hover:text-white/80"
-            }`}
+            className="lg:hidden p-2 text-gray-700 hover:text-black transition-colors duration-300"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -132,7 +113,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-4 py-3 text-base font-medium text-gray-700 hover:text-lcb-primary hover:bg-gray-50 rounded-lg transition-all duration-300"
+                    className="block px-4 py-3 text-base font-medium text-gray-700 hover:text-black hover:bg-orange-50 rounded-lg transition-all duration-300"
                   >
                     {link.label}
                   </Link>
@@ -149,7 +130,7 @@ export default function Navbar() {
                 <Link
                   href="#contacto"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block w-full px-8 py-3.5 text-center text-sm font-semibold text-white bg-lcb-primary rounded-full shadow-md hover:shadow-xl hover:bg-lcb-primary/90 transition-all duration-300"
+                  className="block w-full px-8 py-4 text-center text-xs font-bold uppercase tracking-widest text-white bg-primary rounded-none shadow-sm hover:shadow-md hover:bg-neutral-800 transition-all duration-500"
                 >
                   Visítanos
                 </Link>

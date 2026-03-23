@@ -112,238 +112,187 @@ export default function ContactSection({ contactInfo }: ContactSectionProps) {
   ].filter(Boolean) as Array<{ icon: React.ReactElement; label: string; value: string; href: string }>;
 
   return (
-    <section id="contacto" className="py-20 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
-        >
-          {/* Eyebrow */}
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 bg-lcb-accent rounded-full" />
-            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gray-500">
-              Visítanos
-            </span>
-          </div>
-          
-          {/* Title */}
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-3 tracking-tight leading-tight">
-            Planificá tu Visita
-          </h2>
-          
-          {/* Subtitle */}
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl font-light leading-relaxed">
-            Queremos conocerte. Déjanos tus datos y te ayudamos a dar el primer paso.
-          </p>
-        </motion.div>
+    <section id="contacto" className="bg-primary overflow-hidden">
+      <div className="grid lg:grid-cols-2 min-h-[90vh]">
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-          {/* Contact info - 2 columnas */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-2 space-y-6"
-          >
-            {/* Header */}
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Información útil</h3>
-            
-            {/* Dirección */}
-            <div className="flex items-start gap-4">
-              <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center text-gray-900 flex-shrink-0">
-                <MapPin className="w-6 h-6" />
+        {/* LEFT â€” dark info panel */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="relative bg-primary px-8 py-20 md:px-16 md:py-24 flex flex-col justify-center"
+        >
+          {/* Orange accent bar */}
+          <div className="absolute top-0 left-0 w-1 h-full bg-black text-white" />
+
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-px bg-black text-white" />
+              <span className="text-gray-300 text-xs uppercase tracking-[0.3em] font-medium">Visítanos</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-white leading-[0.9] tracking-tight mb-6">
+              Planificá<br /><span className="text-gray-300 italic pr-4">tu Visita</span>
+            </h2>
+            <p className="text-white/70 text-lg font-light leading-relaxed max-w-sm">
+              Queremos conocerte. Somos una comunidad abierta a todos.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {/* Address */}
+            <div className="flex items-start gap-4 group">
+              <div className="w-11 h-11 rounded-xl bg-black text-white/10 border border-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-black text-white/20 transition-colors">
+                <MapPin className="w-5 h-5 text-gray-300" />
               </div>
               <div>
-                <p className="text-sm text-gray-500 mb-1">Dirección</p>
-                <p className="font-semibold text-gray-900">{contactInfo.direccion}</p>
-                {contactInfo.ciudad && (
-                  <p className="text-gray-600">{contactInfo.ciudad}</p>
-                )}
+                <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Dirección</p>
+                <p className="text-white font-medium">{contactInfo.direccion}</p>
+                {contactInfo.ciudad && <p className="text-white/70 text-sm">{contactInfo.ciudad}</p>}
                 {contactInfo.googleMapsUrl && (
-                  <a
-                    href={contactInfo.googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 hover:text-gray-900 transition-colors text-sm mt-1 inline-block"
-                  >
-                    Ver en Google Maps →
+                  <a href={contactInfo.googleMapsUrl} target="_blank" rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-gray-300-dark transition-colors text-sm mt-1 inline-block">
+                    Ver en Google Maps â†’
                   </a>
                 )}
               </div>
             </div>
 
-            {/* Horarios */}
+            {/* Schedule */}
             {contactInfo.horarios && contactInfo.horarios.length > 0 && (
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <Clock className="w-6 h-6 text-gray-900" />
-                  <h4 className="text-lg font-bold text-gray-900">Horarios de Reuniones</h4>
+              <div className="flex items-start gap-4">
+                <div className="w-11 h-11 rounded-xl bg-black text-white/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 text-gray-300" />
                 </div>
-                <div className="space-y-3 pl-9">
-                  {contactInfo.horarios.map((horario, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center border-b border-gray-200 pb-2"
-                    >
-                      <div>
-                        <p className="font-semibold capitalize text-gray-900">{horario.dia}</p>
-                        <p className="text-sm text-gray-500">{horario.tipo}</p>
+                <div className="flex-1">
+                  <p className="text-white/40 text-xs uppercase tracking-wider mb-3">Horarios</p>
+                  <div className="space-y-2">
+                    {contactInfo.horarios.map((h, i) => (
+                      <div key={i} className="flex justify-between items-center border-b border-white/5 pb-2">
+                        <div>
+                          <p className="text-white text-sm font-medium capitalize">{h.dia}</p>
+                          <p className="text-white/50 text-xs">{h.tipo}</p>
+                        </div>
+                        <p className="text-gray-300 font-medium text-sm">{h.hora}</p>
                       </div>
-                      <p className="text-gray-900 font-semibold">{horario.hora}</p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
 
-            {/* Contact Details */}
-            {contactDetails.map((item, index) => (
-              <div key={index} className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center text-gray-900 flex-shrink-0">
-                  {item.icon}
+            {/* Contact links */}
+            {contactDetails.slice(0, 3).map((item, i) => (
+              <div key={i} className="flex items-center gap-4 group">
+                <div className="w-11 h-11 rounded-xl bg-black text-white/10 border border-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-black text-white/20 transition-colors">
+                  <span className="text-gray-300">{item.icon}</span>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">{item.label}</p>
-                  <a
-                    href={item.href}
-                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                  <p className="text-white/40 text-xs uppercase tracking-wider mb-0.5">{item.label}</p>
+                  <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined}
                     rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="font-semibold text-gray-900 hover:text-gray-600 transition-colors"
-                  >
+                    className="text-white hover:text-gray-300 transition-colors text-sm font-medium">
                     {item.value}
                   </a>
                 </div>
               </div>
             ))}
-          </motion.div>
 
-          {/* Form - 3 columnas */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="lg:col-span-3"
-          >
-            <form
-              onSubmit={handleSubmit}
-              className="bg-gray-50 rounded-2xl p-6 md:p-8"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            {/* Social row */}
+            <div className="flex items-center gap-3 pt-4">
+              {contactInfo.redesSociales?.facebook && (
+                <a href={contactInfo.redesSociales.facebook} target="_blank" rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-white/5 hover:bg-black text-white border border-white/10 hover:border-accent flex items-center justify-center transition-all duration-300">
+                  <Facebook className="w-4 h-4 text-white" />
+                </a>
+              )}
+              {contactInfo.redesSociales?.instagram && (
+                <a href={contactInfo.redesSociales.instagram} target="_blank" rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-white/5 hover:bg-black text-white border border-white/10 hover:border-accent flex items-center justify-center transition-all duration-300">
+                  <Instagram className="w-4 h-4 text-white" />
+                </a>
+              )}
+              {contactInfo.redesSociales?.youtube && (
+                <a href={contactInfo.redesSociales.youtube} target="_blank" rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-white/5 hover:bg-black text-white border border-white/10 hover:border-accent flex items-center justify-center transition-all duration-300">
+                  <Youtube className="w-4 h-4 text-white" />
+                </a>
+              )}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* RIGHT â€” form panel */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="bg-white px-8 py-20 md:px-16 md:py-24 flex flex-col justify-center"
+        >
+          <div className="max-w-lg w-full mx-auto">
+            <h3 className="text-4xl font-serif text-primary mb-3 leading-[0.9] tracking-tight">Envíanos un mensaje</h3>
+            <p className="text-secondary font-light mb-10 text-balance">Un líder de nuestro equipo se comunicará contigo lo antes posible para acompañarte.</p>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
-                    Nombre *
-                  </label>
+                  <label htmlFor="name" className="block text-xs font-medium text-secondary uppercase tracking-[0.1em] mb-2">Nombre *</label>
                   <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                    type="text" id="name" name="name" required
+                    value={formData.name} onChange={handleChange}
+                    className="w-full px-4 py-4 bg-white border border-gray-200 rounded-lg text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all shadow-sm text-sm"
                     placeholder="Tu nombre"
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
-                    Email *
-                  </label>
+                  <label htmlFor="email" className="block text-xs font-medium text-secondary uppercase tracking-[0.1em] mb-2">Email *</label>
                   <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                    type="email" id="email" name="email" required
+                    value={formData.email} onChange={handleChange}
+                    className="w-full px-4 py-4 bg-white border border-gray-200 rounded-lg text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all shadow-sm text-sm"
                     placeholder="tu@email.com"
                   />
                 </div>
               </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Teléfono
-                </label>
+              <div>
+                <label htmlFor="phone" className="block text-xs font-medium text-secondary uppercase tracking-[0.1em] mb-2">Teléfono</label>
                 <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                  type="tel" id="phone" name="phone"
+                  value={formData.phone} onChange={handleChange}
+                  className="w-full px-4 py-4 bg-white border border-gray-200 rounded-lg text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all shadow-sm text-sm"
                   placeholder="+54 9 11 1234-5678"
                 />
               </div>
 
-              <div className="mb-6">
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  ¿Cómo podemos ayudarte? *
-                </label>
+              <div>
+                <label htmlFor="message" className="block text-xs font-medium text-secondary uppercase tracking-[0.1em] mb-2">Â¿Cómo podemos ayudarte? *</label>
                 <textarea
-                  id="message"
-                  name="message"
-                  required
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={5}
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all resize-none"
-                  placeholder="Contanos tu consulta o cómo quisieras que te ayudemos..."
+                  id="message" name="message" required rows={5}
+                  value={formData.message} onChange={handleChange}
+                  className="w-full px-4 py-4 bg-white border border-gray-200 rounded-lg text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all shadow-sm resize-none text-sm"
+                  placeholder="Contanos tu consulta..."
                 />
               </div>
 
               {error && (
-                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-                  {error}
-                </div>
+                <div className="p-4 bg-red-900/30 border border-red-500/30 rounded-lg text-red-400 text-sm">{error}</div>
               )}
-
               {isSubmitted && (
-                <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
-                  ¡Mensaje enviado exitosamente! Te contactaremos pronto.
-                </div>
+                <div className="p-4 bg-green-900/30 border border-green-500/30 rounded-lg text-green-400 text-sm">Â¡Mensaje enviado exitosamente! Te contactaremos pronto.</div>
               )}
 
               <button
                 type="submit"
                 disabled={isSubmitting || isSubmitted}
-                className="w-full bg-gray-900 text-white py-4 px-6 rounded-lg font-semibold hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-black text-white py-4 px-6 rounded-full font-medium tracking-wide shadow-sm hover:shadow-md hover:bg-black text-white-dark transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4"
               >
-                {isSubmitting ? (
-                  "Enviando..."
-                ) : isSubmitted ? (
-                  "¡Mensaje enviado!"
-                ) : (
-                  <>
-                    Planificar mi visita
-                    <Send className="w-5 h-5" />
-                  </>
-                )}
+                {isSubmitting ? "Enviando..." : isSubmitted ? "Â¡Mensaje enviado!" : (<>Enviar mensaje <Send className="w-4 h-4" /></>)}
               </button>
-
-              <p className="text-sm text-gray-500 text-center mt-4">
-                Un líder de nuestro equipo se comunicará contigo.
-              </p>
             </form>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

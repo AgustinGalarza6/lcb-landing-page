@@ -100,15 +100,7 @@ export default async function HomePage() {
       <>
         <Navbar />
         
-        <Hero
-          titulo={heroData.titulo}
-          subtitulo={heroData.subtitulo || undefined}
-          imagenFondo={
-            heroData.imagenFondo && typeof heroData.imagenFondo === "object" && heroData.imagenFondo.url
-              ? heroData.imagenFondo.url
-              : undefined
-          }
-        />
+        <Hero />
 
         {heroData.textoVersiculo && heroData.versiculo && (
           <VerseSection

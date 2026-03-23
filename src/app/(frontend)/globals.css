@@ -2,44 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #1f2937;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    --foreground: #1f2937;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-inter), system-ui, sans-serif;
-}
-
 @layer base {
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+  :root {
+    /* Modern Awaken Church - Bright, Clean, High Contrast */
+    --background: #FFFFFF;
+    --foreground: #000000;
+    
+    /* Core Semantic Brand Colors */
+    --primary: #000000;          /* Eternal Black */
+    --secondary: #1C1917;        /* Soft Dark */
+    --accent: #000000;           /* Pure Black Fallback */
+    --accent-light: #222222;     /* Dark */
+    --accent-dark: #000000;      /* Black */
   }
-  
+
+  /* Typography global clean up & modern resets */
   html {
     scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply font-sans antialiased;
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-  
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-  
-  .animation-delay-4000 {
-    animation-delay: 4s;
   }
 }

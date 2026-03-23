@@ -94,15 +94,15 @@ export default function ConvencionesSection({ convenciones }: ConvencionesSectio
         >
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-1 h-6 bg-lcb-accent rounded-full" />
-              <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gray-500">
+              <div className="w-1 h-6 bg-black rounded-full" />
+              <span className="text-xs uppercase tracking-[0.3em] font-medium text-secondary">
                 Experiencias Transformadoras
               </span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-3 tracking-tight leading-tight">
+            <h2 className="text-4xl md:text-6xl font-serif text-primary mb-3 tracking-tight leading-[0.9]">
               Convenciones
             </h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl font-light leading-relaxed">
+            <p className="text-lg md:text-xl text-secondary max-w-2xl font-light leading-relaxed text-balance">
               Experiencias diseñadas para inspirar y transformar.
             </p>
           </div>
@@ -118,7 +118,7 @@ export default function ConvencionesSection({ convenciones }: ConvencionesSectio
             </button>
             <button
               onClick={() => scroll('right')}
-              className="w-12 h-12 rounded-full bg-gray-900 hover:bg-gray-800 flex items-center justify-center transition-colors"
+              className="w-12 h-12 rounded-full bg-black hover:bg-black-dark flex items-center justify-center transition-colors shadow-sm"
               aria-label="Siguiente"
             >
               <ChevronRight className="w-6 h-6 text-white" />
@@ -156,7 +156,7 @@ export default function ConvencionesSection({ convenciones }: ConvencionesSectio
                     className="block h-full"
                   >
                     <div className={`bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-all duration-300 h-full ${
-                      isFeatured ? 'shadow-lg hover:shadow-xl' : 'hover:shadow-md'
+                      isFeatured ? 'shadow-2xl shadow-black/5 hover:shadow-xl' : 'shadow-sm hover:shadow-md'
                     }`}>
                       {/* Image - Landscape Compact */}
                       <div className={`relative overflow-hidden bg-gray-100 ${
@@ -199,8 +199,8 @@ export default function ConvencionesSection({ convenciones }: ConvencionesSectio
                       <div className="p-6 md:p-8">
                         {/* Title Block */}
                         <div className="mb-4">
-                          <h3 className={`font-bold text-gray-900 leading-tight tracking-tight group-hover:text-gray-700 transition-colors duration-300 line-clamp-2 ${
-                            isFeatured ? 'text-3xl md:text-4xl mb-2' : 'text-2xl md:text-3xl'
+                          <h3 className={`font-serif font-medium text-primary leading-tight tracking-tight group-hover:text-black transition-colors duration-300 line-clamp-2 ${
+                            isFeatured ? 'text-4xl md:text-5xl mb-3' : 'text-2xl md:text-3xl'
                           }`}>
                             {convencion.titulo}
                           </h3>
@@ -276,7 +276,7 @@ export default function ConvencionesSection({ convenciones }: ConvencionesSectio
                                   key={idx}
                                   className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-lg"
                                 >
-                                  <div className="w-7 h-7 rounded-full bg-gray-900 flex items-center justify-center flex-shrink-0">
+                                  <div className="w-7 h-7 rounded-full bg-black flex items-center justify-center flex-shrink-0">
                                     <span className="text-white text-[10px] font-bold">
                                       {conf.nombre.split(' ').map(n => n[0]).join('').slice(0, 2)}
                                     </span>
@@ -290,12 +290,12 @@ export default function ConvencionesSection({ convenciones }: ConvencionesSectio
 
                         {/* CTA */}
                         <div className="flex items-center justify-between">
-                          <span className="inline-flex items-center gap-2 text-gray-900 font-semibold text-sm group-hover:gap-3 transition-all duration-300">
+                          <span className="inline-flex items-center gap-2 text-black font-semibold text-sm group-hover:gap-3 transition-all duration-300">
                             {isFeatured ? 'Reservar lugar' : 'Ver detalles'}
                             <ArrowRight className="w-4 h-4" />
                           </span>
                           {isFeatured && (
-                            <div className="px-3 py-1 bg-lcb-accent/10 text-lcb-accent rounded-full">
+                            <div className="px-3 py-1 bg-black/10 text-black rounded-full">
                               <span className="text-xs font-semibold">Destacado</span>
                             </div>
                           )}

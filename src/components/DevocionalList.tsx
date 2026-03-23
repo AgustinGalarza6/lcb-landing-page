@@ -29,10 +29,10 @@ export default function DevocionalList({ devocionales }: DevocionalListProps) {
       <section id="devocionales" className="py-24 bg-white">
         <div className="container">
           <div className="text-center">
-            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif font-medium text-black mb-6 tracking-tight leading-[0.9]">
               Blog & Devocionales
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-secondary font-light">
               Próximamente publicaremos contenido devocional.
             </p>
           </div>
@@ -55,14 +55,14 @@ export default function DevocionalList({ devocionales }: DevocionalListProps) {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full mb-4">
-            <BookOpen className="w-5 h-5 text-gray-900" />
-            <span className="text-sm font-semibold text-gray-900">Contenido Devocional</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white shadow-sm rounded-full mb-4">
+            <BookOpen className="w-5 h-5 text-black" />
+            <span className="text-xs uppercase tracking-[0.2em] font-medium text-primary">Contenido Devocional</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif text-primary mb-6 leading-[0.9] tracking-tight">
             Blog & Devocionales
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-secondary max-w-2xl mx-auto font-light text-balance">
             Pensamientos, enseñanzas y palabra para tu vida diaria.
           </p>
         </motion.div>
@@ -79,7 +79,7 @@ export default function DevocionalList({ devocionales }: DevocionalListProps) {
               className="group"
             >
               <Link href={`/devocionales/${devocional.id}`}>
-                <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col md:flex-row">
+                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 h-full flex flex-col md:flex-row">
                   {/* Imagen */}
                   {devocional.imagenPortada && (
                     <div className="md:w-2/5 h-64 md:h-auto overflow-hidden bg-gray-200 relative">
@@ -104,11 +104,11 @@ export default function DevocionalList({ devocionales }: DevocionalListProps) {
                     <div>
                       <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
                         <div className="flex items-center gap-1">
-                          <User className="w-4 h-4 text-lcb-primary" />
-                          <span className="font-medium text-lcb-dark">{devocional.autor}</span>
+                          <User className="w-4 h-4 text-primary" />
+                          <span className="font-medium text-black">{devocional.autor}</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4 text-lcb-secondary" />
+                          <Calendar className="w-4 h-4 text-secondary" />
                           <span>{new Date(devocional.fecha).toLocaleDateString('es-ES', { 
                             day: 'numeric',
                             month: 'long',
@@ -117,20 +117,20 @@ export default function DevocionalList({ devocionales }: DevocionalListProps) {
                         </div>
                       </div>
 
-                      <h3 className="text-2xl font-bold text-lcb-dark mb-3 group-hover:text-lcb-primary transition-colors line-clamp-2">
+                      <h3 className="text-3xl md:text-4xl font-serif font-medium leading-tight text-primary mb-3 group-hover:text-black transition-colors line-clamp-2">
                         {devocional.titulo}
                       </h3>
 
                       {devocional.extracto && (
-                        <p className="text-gray-600 mb-4 line-clamp-3">
+                        <p className="text-secondary font-light mb-4 line-clamp-3">
                           {devocional.extracto}
                         </p>
                       )}
                     </div>
 
-                    <div className="flex items-center gap-2 text-lcb-primary font-semibold group-hover:gap-4 transition-all">
+                    <div className="flex items-center gap-2 text-black font-semibold text-sm group-hover:gap-3 transition-all">
                       Leer más
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-4 h-4" />
                     </div>
                   </div>
                 </div>
@@ -148,10 +148,10 @@ export default function DevocionalList({ devocionales }: DevocionalListProps) {
         >
           <Link
             href="/devocionales"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-lcb-secondary text-white font-semibold rounded-lg hover:bg-lcb-secondary/90 transition-all hover:scale-105 shadow-lg"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white font-medium tracking-wide rounded-full shadow-sm hover:shadow-md transition-all duration-500 hover:bg-black-dark hover:scale-[1.02] text-sm"
           >
             Ver todos los devocionales
-            <BookOpen className="w-5 h-5" />
+            <BookOpen className="w-4 h-4 ml-1" />
           </Link>
         </motion.div>
       </div>
